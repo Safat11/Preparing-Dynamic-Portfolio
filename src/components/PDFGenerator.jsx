@@ -1,16 +1,20 @@
+import React from "react";
 import jsPDF from "jspdf";
 
-const PDFGenerator = ({ data }) => {
+const PDFGenerator = ({ portfolioData }) => {
   const generatePDF = () => {
     const doc = new jsPDF();
-    doc.text(`Portfolio - ${data.name}`, 10, 10);
-    doc.text(`Contact: ${data.contact}`, 10, 20);
-    doc.text(`Bio: ${data.bio}`, 10, 30);
-    doc.text(`Skills: ${data.skills}`, 10, 40);
+
+    doc.text(`Full Name: ${portfolioData.fullName}`, 10, 10);
+    doc.text(`Contact: ${portfolioData.contact}`, 10, 20);
+    doc.text(`Bio: ${portfolioData.bio}`, 10, 30);
+
+    // Add other sections like skills, work experience, etc.
+
     doc.save("portfolio.pdf");
   };
 
-  return <button className="bg-red-500 text-white p-2" onClick={generatePDF}>Download PDF</button>;
+  return <button onClick={generatePDF}>Generate PDF</button>;
 };
 
 export default PDFGenerator;

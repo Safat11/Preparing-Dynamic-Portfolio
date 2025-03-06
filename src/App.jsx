@@ -1,21 +1,38 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import Auth from "./components/Auth";
 import PortfolioForm from "./components/PortfolioForm";
-import PortfolioPreview from "./components/PortfolioPreview";
+import SkillsSection from "./components/SkillsSection";
+import WorkExperienceSection from "./components/WorkExperienceSection";
 import PDFGenerator from "./components/PDFGenerator";
-import Auth from './components/Auth.jsx';
+import { savePortfolioData } from "./services/databaseService";
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [portfolioData, setPortfolioData] = useState(null);
+  const [portfolioData, setPortfolioData] = useState({});
 
-  return user ? (
-    <>
-      <PortfolioForm user={user} setPortfolioData={setPortfolioData} />
-      {portfolioData && <PortfolioPreview data={portfolioData} />}
-      {portfolioData && <PDFGenerator data={portfolioData} />}
-    </>
-  ) : (
-    <Auth setUser={setUser} />
+  const handlePortfolioDataChange = (data) => {
+    setPortfolioData((prev) => ({ ...prev, ...data }));
+  };
+
+  const handleSubmitPortfolio = () => {
+    savePortfolioData(portfolioData);
+  };
+
+  return (
+    <div>
+      {!user ? (
+        <Auth setUser={setUser} />
+      ) : (
+        <div>
+          <h1>Create Your Portfolio</h1>
+          <PortfolioForm onSubmit={handlePortfolioDataChange} />
+          <SkillsSection onChange={handlePortfolioDataChange} />
+          <WorkExperienceSection onChange={handlePortfolioDataChange} />
+          <PDFGenerator portfolioData={portfolioData} />
+          <button onClick={handleSubmitPortfolio}>Submit Portfolio</button>
+        </div>
+      )}
+    </div>
   );
 };
 

@@ -1,16 +1,15 @@
-const PortfolioPreview = ({ data }) => {
-    if (!data) return <p>No portfolio data available</p>;
-  
-    return (
-      <div className="p-4">
-        <h2 className="text-2xl font-bold">{data.name}</h2>
-        <p>{data.contact}</p>
-        <p>{data.bio}</p>
-        <p><strong>Skills:</strong> {data.skills}</p>
-        {data.image && <img src={data.image} alt="Profile" className="w-32 h-32 rounded-full" />}
-      </div>
-    );
-  };
-  
-  export default PortfolioPreview;
-  
+import React from 'react';
+
+function PortfolioPreview({ portfolioData }) {
+  return (
+    <div>
+      <h2>Portfolio Preview</h2>
+      <p>Name: {portfolioData.name}</p>
+      <p>Title: {portfolioData.title}</p>
+      <p>Skills: {portfolioData.skills.join(', ')}</p>
+      <p>Work Experience: {portfolioData.workExperience.join(', ')}</p>
+    </div>
+  );
+}
+
+export default PortfolioPreview;
